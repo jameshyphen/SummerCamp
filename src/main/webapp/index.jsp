@@ -1,8 +1,11 @@
 <html>
 <body>
-<%= request.getAttribute("test")%>
-<% if (request.getParameter("postalCode") == null) { %>
-	<jsp:include page = "PostalCodeInput.jsp" />
+
+<% if (request.getParameter("postalCode") == null || request.getAttribute("postalCodeError") != null) { %>
+	<jsp:include page = "PostalCode.jsp">
+  		<jsp:param name="postalCodeError" value="${postalCodeError}" />
+	</jsp:include>
 <% } %>
+
 </body>
 </html>

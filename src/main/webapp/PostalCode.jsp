@@ -2,13 +2,15 @@
 <body>
 
 <h2>Postal code</h2>
-<form action="index.jsp" method="post">
+${test}
+<form action="index" method="post">
+	
 	<table style="border: 1px solid black;">
 		<tr>
 			<th>Postal code:</th>
 			<th><input type = "text" name = "postalCode" value="8000"></th>
-			<% if (request.getParameter("validationError")  != null) { %>
-				<th style="color:red;">${validationError}</th>
+			<% if (request.getParameter("postalCodeError")  != null) { %>
+				<th style="color:red;">${postalCodeError}</th>
 			<% }%>
 		</tr>
 	</table>
