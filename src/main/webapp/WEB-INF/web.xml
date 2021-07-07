@@ -4,4 +4,14 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>SummerCamp</servlet-name>
+  	<display-name>SummerCamp</display-name>
+  	<description></description>
+  	<servlet-class>SummerCamp</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>SummerCamp</servlet-name>
+  	<url-pattern>/summercamp</url-pattern>
+  </servlet-mapping>
 </web-app>

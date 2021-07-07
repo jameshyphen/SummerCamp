@@ -1,5 +1,7 @@
 <html>
 <body>
-<h2>Hello World!</h2>
+<% if (request.getParameter("postalCode") == null) { %>
+	<jsp:include page = "PostalCodeInput.jsp" />
+<% } %>
 </body>
 </html>
