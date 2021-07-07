@@ -6,7 +6,10 @@
 	<table style="border: 1px solid black;">
 		<tr>
 			<th>Postal code:</th>
-			<th><input type = "text" name = "postalCode"></th>
+			<th><input type = "text" name = "postalCode" value="8000"></th>
+			<% if (request.getParameter("validationError")  != null) { %>
+				<th style="color:red;">${validationError}</th>
+			<% }%>
 		</tr>
 	</table>
 	<br><br>
