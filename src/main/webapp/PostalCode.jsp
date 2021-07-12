@@ -2,13 +2,13 @@
 <body>
 
 <h2>Postal code</h2>
-${test}
 <form action="index" method="post">
 	
 	<table style="border: 1px solid black;">
 		<tr>
 			<th>Postal code:</th>
-			<th><input type = "text" name = "postalCode" value="8000"></th>
+			<% String previousPostalCode = ((request.getAttribute("previousPostalCode") == null) ? "8000" : (String) request.getAttribute("previousPostalCode")); %>
+			<th><input type = "text" name = "postalCode" value="<%=previousPostalCode %>"></th>
 			<% if (request.getParameter("postalCodeError")  != null) { %>
 				<th style="color:red;">${postalCodeError}</th>
 			<% }%>
