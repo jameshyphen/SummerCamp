@@ -16,7 +16,11 @@ if (postalCode == null || request.getAttribute("postalCodeError") != null) { %>
    <jsp:param name="units" value="SI" />
 </jsp:include>
 
+
+
 <% }%>
+${test1}
+${test2}
 
 </body>
 </html>
