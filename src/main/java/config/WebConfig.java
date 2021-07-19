@@ -7,10 +7,18 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import domain.services.PostalCodeService;
+import domain.services.PostalCodeServiceImpl;
+
 @EnableWebMvc
 @Configuration
 @ComponentScan("controllers")
 public class WebConfig implements WebMvcConfigurer {
+	
+	@Bean
+	public PostalCodeService postalCodeService() {
+		return new PostalCodeServiceImpl();
+	}
 	
 	@Bean
 	public ViewResolver viewResolver() {

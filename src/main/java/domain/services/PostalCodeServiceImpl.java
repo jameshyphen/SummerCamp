@@ -6,10 +6,10 @@ import java.util.ResourceBundle;
 
 import domain.Camp;
 
-public class PostServiceImpl implements PostService{
+public class PostalCodeServiceImpl implements PostalCodeService{
 	private SummerCampServiceImpl summerCampService;
 	
-	public PostServiceImpl() {
+	public PostalCodeServiceImpl() {
 		summerCampService = new SummerCampServiceImpl();
 	}
 

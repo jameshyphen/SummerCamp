@@ -1,9 +1,12 @@
 package controllers;
 
 import domain.*;
+import domain.services.PostalCodeService;
 
 import java.util.List;
+import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class SummerCampController {
 	
+	@Autowired
+	private PostalCodeService postalCodeService;
+	
 	@GetMapping("/summercamp")
 	public String showIndex(Model model) {
 		model.addAttribute("test1", "testaaa");
@@ -21,21 +27,20 @@ public class SummerCampController {
 	
 
 	@PostMapping("/summercamp")
-	public String submitPostalCode(@RequestParam String postalCode, Model model) {
+	public String submitPostalCode(@RequestParam String postalCode, Model model, Locale loc) {
 		model.addAttribute("test2", postalCode);
 		if (postalCode == null || postalCode.toString().length() == 0) {
-			model.setAttribute("postalCodeError", getPostValidationError(request.getLocale(), "postNoValue"));
+			model.addAttribute("postalCodeError", postalCodeService.getPostValidationError(loc, "postNoValue"));
 		} else if (!postalCode.toString().matches("[0-9]+")) {
-			model.setAttribute("postalCodeError", getPostValidationError(request.getLocale(), "postNoNumber"));
+			model.addAttribute("postalCodeError", postalCodeService.getPostValidationError(loc, "postNoNumber"));
 		} else if (Integer.parseInt(postalCode)<1000) {
-			model.setAttribute("postalCodeError", getPostValidationError(request.getLocale(), "postBelowMin"));
+			model.addAttribute("postalCodeError", postalCodeService.getPostValidationError(loc, "postBelowMin"));
 		} else if (Integer.parseInt(postalCode)>9990) {
-			model.setAttribute("postalCodeError", getPostValidationError(request.getLocale(), "postAboveMax"));
+			model.addAttribute("postalCodeError", postalCodeService.getPostValidationError(loc, "postAboveMax"));
 		} else {
 			// No errors
-			int postalCode = Integer.parseInt(postalCode);
-			List<Camp> camps = getCampsByPostalCode(postalCode);
-			model.setAttribute("campsCloseby", camps);
+			List<Camp> camps = postalCodeService.getCampsByPostalCode(Integer.parseInt(postalCode));
+			model.addAttribute("campsCloseby", camps);
 		}
 
 		return showIndex(model);
