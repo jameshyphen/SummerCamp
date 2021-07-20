@@ -7,8 +7,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import domain.services.CampService;
 import domain.services.PostalCodeService;
 import domain.services.PostalCodeServiceImpl;
+import domain.services.SummerCampServiceImpl;
 
 @EnableWebMvc
 @Configuration
@@ -18,6 +20,11 @@ public class WebConfig implements WebMvcConfigurer {
 	@Bean
 	public PostalCodeService postalCodeService() {
 		return new PostalCodeServiceImpl();
+	}
+	
+	@Bean
+	public CampService campService() {
+		return new SummerCampServiceImpl();
 	}
 	
 	@Bean

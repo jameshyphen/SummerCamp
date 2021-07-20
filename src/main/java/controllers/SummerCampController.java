@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 @Controller
 public class SummerCampController {
 	
@@ -45,5 +46,13 @@ public class SummerCampController {
 
 		return showIndex(model);
 	}
+	
+//	
+//	@PostMapping("/camptest")
+//	@ResponseBody
+//	public Object postCamp() {
+//		Camp camp = new Camp(1, "test", 9000, 5);
+//		return camp;
+//	}
 
 }
