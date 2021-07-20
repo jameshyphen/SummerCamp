@@ -19,7 +19,7 @@ if (postalCode == null || request.getAttribute("postalCodeError") != null) { %>
 
 
 <% }%>
-${test1}
+${username}
 ${test2}
 
 </body>

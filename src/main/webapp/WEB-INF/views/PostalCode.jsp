@@ -2,7 +2,7 @@
 <html>
 <body>
 
-<h2>Postal code</h2>
+<h2>Welcome back ${username} Postal code</h2>
 <form:form action="summercamp" method="post">
 	
 	<table style="border: 1px solid black;">
