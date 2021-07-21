@@ -14,7 +14,7 @@ import domain.services.SummerCampServiceImpl;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan("controllers")
+@ComponentScan(basePackages= {"controllers", "config"})
 public class WebConfig implements WebMvcConfigurer {
 	
 	@Bean

@@ -5,7 +5,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
 import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import config.SecurityConfig;
@@ -32,7 +34,7 @@ public class SpringMvcInitializer implements WebApplicationInitializer{
 	            new AnnotationConfigWebApplicationContext();
 	    ctx.register(WebConfig.class); // configuration class for root context
 	    ctx.register(SecurityConfig.class);
-
+	    
         ServletRegistration.Dynamic servlet = container.addServlet(
                 "dispatcher", new DispatcherServlet(ctx));
 
