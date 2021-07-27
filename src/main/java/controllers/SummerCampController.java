@@ -60,7 +60,47 @@ public class SummerCampController {
 		model.addAttribute(camp);
 		return "AddKidForm";
 	}
+//	nameEmpty
+//	codeOneEmpty
+//	codeTwoEmpty
+//	codeOneBiggerThanTwo
+//	codeNotNumeric
 	
+	@PostMapping("/add/{id}")
+	public String submitAddKid(@PathVariable("id") int id, Model model, Locale loc, @RequestParam String name, @RequestParam String code1, @RequestParam String code2) {
+		Camp camp = campService.findCamp(id);
+		
+		System.out.println(name);
+		System.out.println(code1);
+		System.out.println(code2);
+		
+		model.addAttribute(camp);
+		if (name ==  null || name.toString().length() == 0) {
+			System.out.println("HERE AAA");
+			model.addAttribute("errorName", postalCodeService.getPostValidationError(loc, "nameEmpty"));
+		} else if (name.toString().matches("[0-9]+")) {
+			model.addAttribute("errorName", postalCodeService.getPostValidationError(loc, "nameNotAlphabetical"));
+		}
+		if (code2 ==  null || code2.toString().length() == 0) {
+			model.addAttribute("errorCodeTwo", postalCodeService.getPostValidationError(loc, "codeTwoEmpty"));
+		} else if (!code2.toString().matches("[0-9]+")) {
+			model.addAttribute("errorCodeTwo", postalCodeService.getPostValidationError(loc, "codeNotNumeric"));
+		}
+		
+		if (code1 ==  null || code1.toString().length() == 0) {
+			System.out.println("HERE 222AAA");
+			model.addAttribute("errorCodeOne", postalCodeService.getPostValidationError(loc, "codeOneEmpty"));
+		} else if (!code1.toString().matches("[0-9]+")) {
+			model.addAttribute("errorCodeOne", postalCodeService.getPostValidationError(loc, "codeNotNumeric"));
+		} else if (Integer.parseInt(code1) > Integer.parseInt(code2)) {
+			model.addAttribute("errorCodeOne", postalCodeService.getPostValidationError(loc, "codeOneBiggerThanTwo"));
+		}
+		
+		
+		
+		return showAddKid(id, model, loc);
+	}
+
 //	
 //	@PostMapping("/camptest")
 //	@ResponseBody
