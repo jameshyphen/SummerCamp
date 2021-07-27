@@ -1,6 +1,7 @@
 package controllers;
 
 import domain.*;
+import domain.services.CampService;
 import domain.services.PostalCodeService;
 
 import java.util.List;
@@ -10,24 +11,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
+@RequestMapping("/summercamp")
 public class SummerCampController {
 	
 	@Autowired
 	private PostalCodeService postalCodeService;
 	
-	@GetMapping("/summercamp")
+	@Autowired
+	private CampService campService;
+	
+	@GetMapping
 	public String showIndex(Model model) {
 		model.addAttribute("test1", "testaaa");
 		return "index";
 	}
 	
 
-	@PostMapping("/summercamp")
+	@PostMapping
 	public String submitPostalCode(@RequestParam String postalCode, Model model, Locale loc) {
 		model.addAttribute("test2", postalCode);
 		if (postalCode == null || postalCode.toString().length() == 0) {
@@ -45,6 +52,13 @@ public class SummerCampController {
 		}
 
 		return showIndex(model);
+	}
+	
+	@GetMapping("/add/{id}")
+	public String showAddKid(@PathVariable("id") int id, Model model, Locale loc) {
+		Camp camp = campService.findCamp(id);
+		model.addAttribute(camp);
+		return "AddKidForm";
 	}
 	
 //	
