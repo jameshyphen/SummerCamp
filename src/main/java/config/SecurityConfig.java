@@ -38,10 +38,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic();
+        http.formLogin()
+        	.defaultSuccessUrl("/", true)
+        	.loginPage("/login");
         http
-                .authorizeRequests()
-                .antMatchers("/*").hasRole("USER");
+            .authorizeRequests()
+            .antMatchers("/summercamp").hasRole("USER");
         System.out.println("HIER2");
     }
 }

@@ -19,6 +19,10 @@ if (postalCode == null || request.getAttribute("postalCodeError") != null) { %>
 
 
 <% }%>
+<form action='logout' method='post'>
+	<input type="submit" value="Log out" style="border-radius:25px; width: 100px; height: 30px;">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</form>
 ${username}
 ${test2}
 
