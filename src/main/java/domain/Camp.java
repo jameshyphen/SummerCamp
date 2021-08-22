@@ -11,6 +11,8 @@ public class Camp {
 
 	private List<Person> children;
 
+	public Camp() {}
+	
 	public Camp(Integer id, String name, int postalCode, int maxChildren) {
 		this.id = id;
 		this.manager = new Person(name);

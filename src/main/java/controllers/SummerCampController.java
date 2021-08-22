@@ -1,6 +1,7 @@
 package controllers;
 
 import domain.*;
+import domain.services.AuthorizationService;
 import domain.services.CampService;
 import domain.services.PostalCodeService;
 
@@ -22,6 +23,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/summercamp")
 public class SummerCampController {
+	
+	public void setPostalCodeServiceMock(PostalCodeService service) {
+		this.postalCodeService = service;
+	}
+
+	public void setCampServiceMock(CampService service) {
+		this.campService = service;
+	}
+	
+
+	public void setAuthorizationMock(AuthorizationService service) {
+		this.authorizationService = service;
+	}
+
+
+	@Autowired
+	private AuthorizationService authorizationService;
 
 	@Autowired
 	private PostalCodeService postalCodeService;
@@ -31,7 +49,6 @@ public class SummerCampController {
 
 	@GetMapping
 	public String showIndex(Model model) {
-		model.addAttribute("test1", "testaaa");
 		return "index";
 	}
 
@@ -51,7 +68,7 @@ public class SummerCampController {
 			List<Camp> camps = postalCodeService.getCampsByPostalCode(Integer.parseInt(postalCode));
 			model.addAttribute("campsCloseby", camps);
 
-			Boolean admin = hasRole("ROLE_ADMIN");
+			Boolean admin = this.authorizationService.hasRole(SecurityContextHolder.getContext(), "ROLE_ADMIN");
 			if(!admin) {admin=null;}
 			model.addAttribute("admin", admin);
 			System.out.println(admin);
@@ -74,49 +91,38 @@ public class SummerCampController {
 		return "AddKidForm";
 	}
 
-	@SuppressWarnings("unchecked")
-	private boolean hasRole(String role) {
-		Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-		boolean hasRole = false;
-		for (GrantedAuthority authority : authorities) {
-			hasRole = authority.getAuthority().equals(role);
-			if (hasRole) {
-				break;
-			}
-		}
-		return hasRole;
-	}
-
 	@PostMapping("/add/{id}")
 	public String submitAddKid(@PathVariable("id") int id, Model model, Locale loc, @RequestParam String name,
 			@RequestParam String code1, @RequestParam String code2) {
 		Camp camp = campService.findCamp(id);
 
-		System.out.println(name);
-		System.out.println(code1);
-		System.out.println(code2);
-
 		model.addAttribute(camp);
-		if (name == null || name.toString().length() == 0) {
-			System.out.println("HERE AAA");
+		if (isEmptyOrNull(name)) {
 			model.addAttribute("errorName", postalCodeService.getPostValidationError(loc, "nameEmpty"));
-		} else if (name.toString().matches("[0-9]+")) {
+		} else if (name.matches(".*\\d.*")) {
 			model.addAttribute("errorName", postalCodeService.getPostValidationError(loc, "nameNotAlphabetical"));
 		}
-		if (code2 == null || code2.toString().length() == 0) {
+		if (isEmptyOrNull(code2)) {
 			model.addAttribute("errorCodeTwo", postalCodeService.getPostValidationError(loc, "codeTwoEmpty"));
 		} else if (!code2.toString().matches("[0-9]+")) {
 			model.addAttribute("errorCodeTwo", postalCodeService.getPostValidationError(loc, "codeNotNumeric"));
 		}
 
-		if (code1 == null || code1.toString().length() == 0) {
-			System.out.println("HERE 222AAA");
+		if (isEmptyOrNull(code1)) {
 			model.addAttribute("errorCodeOne", postalCodeService.getPostValidationError(loc, "codeOneEmpty"));
 		} else if (!code1.toString().matches("[0-9]+")) {
 			model.addAttribute("errorCodeOne", postalCodeService.getPostValidationError(loc, "codeNotNumeric"));
-		} else if (Integer.parseInt(code1) > Integer.parseInt(code2)) {
-			model.addAttribute("errorCodeOne", postalCodeService.getPostValidationError(loc, "codeOneBiggerThanTwo"));
 		}
+		
+		if( !isEmptyOrNull(code1) && !isEmptyOrNull(code2)) {
+			System.out.println("Codes here lol");
+			System.out.println(code1);
+			System.out.println(code2);
+			if (Integer.parseInt(code1) > Integer.parseInt(code2)) {
+				model.addAttribute("errorCodeOne", postalCodeService.getPostValidationError(loc, "codeOneBiggerThanTwo"));
+			}
+		}
+		
 		
 		if(model.getAttribute("errorName") == null && model.getAttribute("errorCodeOne") == null && model.getAttribute("errorCodeTwo") == null) {
 			if(camp.maxChildrenExceeded()) {
@@ -127,9 +133,14 @@ public class SummerCampController {
 			model.addAttribute("message", postalCodeService.getPostValidationError(loc, "kidAdded"));
 			return "redirect:/summercamp";
 		}
-
+		
 		return showAddKid(id, model, loc);
 	}
+	
+	private boolean isEmptyOrNull(String val) {
+		return val == null || val.length()<=0 || val == "null";
+	}
+
 
 	public void Test() {
 		System.out.println("TEEEST");

@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: controllers.SummerCampControllerTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.068 s <<< FAILURE! - in controllers.SummerCampControllerTest
+testParameterizedPostalCodeInputs  Time elapsed: 0.014 s  <<< ERROR!
+java.lang.NullPointerException
+	at controllers.SummerCampControllerTest.isPostWrong(SummerCampControllerTest.java:73)
+	at controllers.SummerCampControllerTest.testParameterizedPostalCodeInputs(SummerCampControllerTest.java:69)
+
