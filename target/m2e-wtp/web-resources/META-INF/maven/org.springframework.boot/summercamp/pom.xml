@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.springframework.boot</groupId>
-  <artifactId>spring-boot-starter-security</artifactId>
+  <artifactId>summercamp</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
 
-  <name>spring-boot-starter-security Maven Webapp</name>
+  <name>summercamp Maven Webapp</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
@@ -17,7 +17,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>14</maven.compiler.source>
     <maven.compiler.target>14</maven.compiler.target>
-    <start-class>org.springframework.boot.src.main.java.config.core.SpringMvcInitializer</start-class>
   </properties>
   <repositories>
 	<repository>

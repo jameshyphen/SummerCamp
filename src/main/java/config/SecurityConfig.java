@@ -10,40 +10,31 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter 
-{
- 
-	//DelegatingPasswordEncoder 
-	@Override
-    protected void configure(AuthenticationManagerBuilder auth) 
-      throws Exception {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    // DelegatingPasswordEncoder
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        auth.inMemoryAuthentication()
-          .withUser("user").password(encoder.encode("user")).roles("USER").and()
-          .withUser("admin").password(encoder.encode("admin")).roles("USER","ADMIN");
-        
+        auth.inMemoryAuthentication().withUser("user").password(encoder.encode("user")).roles("USER").and()
+                .withUser("admin").password(encoder.encode("admin")).roles("USER", "ADMIN");
+
         System.out.println("HIER");
     }
-    
-	//NoOpPasswordEncoder
-    /*@Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                // enable in memory based authentication with a user named
-                // "user" and "admin"
-                .inMemoryAuthentication()
-                .withUser("user").password("{noop}user").roles("USER").and()
-                .withUser("admin").password("{noop}admin").roles("USER", "ADMIN");
-    }*/
-    
+
+    // NoOpPasswordEncoder
+    /*
+     * @Override protected void configure(AuthenticationManagerBuilder auth) throws
+     * Exception { auth // enable in memory based authentication with a user named
+     * // "user" and "admin" .inMemoryAuthentication()
+     * .withUser("user").password("{noop}user").roles("USER").and()
+     * .withUser("admin").password("{noop}admin").roles("USER", "ADMIN"); }
+     */
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin()
-        	.defaultSuccessUrl("/", true)
-        	.loginPage("/login");
-        http
-            .authorizeRequests()
-            .antMatchers("/summercamp").hasRole("USER");
+        http.formLogin().defaultSuccessUrl("/", true).loginPage("/login");
+        http.authorizeRequests().antMatchers("/summercamp").hasRole("USER");
         System.out.println("HIER2");
     }
 }

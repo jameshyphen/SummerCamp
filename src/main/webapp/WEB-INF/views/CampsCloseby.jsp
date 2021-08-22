@@ -12,9 +12,20 @@
 </tr>
 <c:forEach var="camp" items="${campsCloseby}">
 	
-	
-		<tr>
-			<th style="border: 1px solid black;">${camp.manager.name}</th>
+	<tr>
+		    
+	<th style="border: 1px solid black;">
+<%
+boolean admin = Boolean.TRUE == request.getAttribute("admin");
+
+if (admin){ %>
+		
+				<a href="<c:url value="/summercamp/add/${camp.id}"/>">${camp.manager.name}</a>
+			
+<%} else { %>
+		${camp.manager.name}
+<%} %>
+</th>
 			<th style="border: 1px solid black;">${camp.postalCode}</th>
 			<th style="border: 1px solid black;">${camp.maxChildren}</th>
 		</tr>

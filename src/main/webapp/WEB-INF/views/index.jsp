@@ -13,6 +13,7 @@ if (postalCode == null || request.getAttribute("postalCodeError") != null) { %>
 
 <jsp:include page="CampsCloseby.jsp" flush="true">
    <jsp:param name="dist" value="${campsCloseby}" />
+   <jsp:param name="usr" value="${admin}" />
    <jsp:param name="units" value="SI" />
 </jsp:include>
 
@@ -23,8 +24,6 @@ if (postalCode == null || request.getAttribute("postalCodeError") != null) { %>
 	<input type="submit" value="Log out" style="border-radius:25px; width: 100px; height: 30px;">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
-${username}
-${test2}
 
 </body>
 </html>
