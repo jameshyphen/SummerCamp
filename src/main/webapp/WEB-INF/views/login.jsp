@@ -13,27 +13,27 @@
 		<div id="login-box">
 			<h3>Login with Username and Password</h3>
 			<c:if test="${not empty error}">
-			<div class="error">${error}</div>
+			<div style="color:red;" class="error">${error}</div>
 			</c:if>
 				<c:if test="${not empty msg}">
 				<div class="msg">${msg}</div>
 			</c:if>
 			<form action='login' method='POST'>
-				<table>
-					<tr>
-						<td>User:</td>
-						<td><input type='text' name='username' value=''></td>
+				<table style="border: 1px solid black; border-collapse: collapse">
+					<tr style="border: 1px solid black">
+						<td style="border: 1px solid black">User:</td>
+						<td style="border: 1px solid black"><input type='text' name='username' value=''></td>
 					</tr>
 					<tr>
-						<td>Password:</td>
-						<td><input type='password' name='password' /></td>
-					</tr>
-					<tr>
-						<td colspan='2'><input name="submit" type="submit"
-						value="submit" /></td>
+						<td style="border: 1px solid black">Password:</td>
+						<td style="border: 1px solid black"><input type='password' name='password' /></td>
 					</tr>
 				</table>
-				<input type="hidden" name="${_csrf.parameterName}"
+				<br>				
+				<br>
+				<input style="border-radius:25px; width: 100px; height: 30px;" name="submit" type="submit"
+						value="submit" />
+				<input  type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
 			</form>
 		</div>
