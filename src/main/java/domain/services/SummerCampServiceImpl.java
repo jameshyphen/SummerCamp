@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import domain.Camp;
+import domain.Person;
 
 public class SummerCampServiceImpl implements CampService {
 	private Map<Integer, Camp> mapSummerCamp = new HashMap<>();
@@ -44,4 +45,16 @@ public class SummerCampServiceImpl implements CampService {
                 return null;
         }
     }
+
+	@Override
+	public Person addKid(int campId, String name, int code1, int code2) {
+		Camp camp = this.mapSummerCamp.get(campId);
+		Person child = new Person(name);
+		child.setCode1(code1);
+		child.setCode2(code2);
+		camp.signUpChild(child);
+		return child;
+	}
+    
+    
 }

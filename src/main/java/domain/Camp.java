@@ -40,6 +40,9 @@ public class Camp {
         {
 			maxChildren--;
 			children.add(child);
+			System.out.println("TEEEST");
+			System.out.println(this.children);
+
         }
 	}
 

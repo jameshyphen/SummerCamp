@@ -64,9 +64,17 @@ public class SummerCampController {
 	public String showAddKid(@PathVariable("id") int id, Model model, Locale loc) {
 		Camp camp = campService.findCamp(id);
 		model.addAttribute(camp);
+		
+		boolean submitted = Boolean.TRUE == model.getAttribute("submitted");
+		
+		if(submitted && model.getAttribute("errorName") == null && model.getAttribute("errorCodeOne") == null && model.getAttribute("errorCodeTwo") == null) {
+			model.addAttribute("message", postalCodeService.getPostValidationError(loc, "kidAdded"));
+			return "redirect:/summercamp";
+		}
 		return "AddKidForm";
 	}
 
+	@SuppressWarnings("unchecked")
 	private boolean hasRole(String role) {
 		Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 		boolean hasRole = false;
@@ -109,6 +117,16 @@ public class SummerCampController {
 		} else if (Integer.parseInt(code1) > Integer.parseInt(code2)) {
 			model.addAttribute("errorCodeOne", postalCodeService.getPostValidationError(loc, "codeOneBiggerThanTwo"));
 		}
+		
+		if(model.getAttribute("errorName") == null && model.getAttribute("errorCodeOne") == null && model.getAttribute("errorCodeTwo") == null) {
+			if(camp.maxChildrenExceeded()) {
+				model.addAttribute("error", postalCodeService.getPostValidationError(loc, "maxKidsExceeded"));
+				return "redirect:/summercamp";
+			}
+			this.campService.addKid(id, name, Integer.parseInt(code2), Integer.parseInt(code2));
+			model.addAttribute("message", postalCodeService.getPostValidationError(loc, "kidAdded"));
+			return "redirect:/summercamp";
+		}
 
 		return showAddKid(id, model, loc);
 	}
@@ -117,12 +135,5 @@ public class SummerCampController {
 		System.out.println("TEEEST");
 	}
 
-	//
-	// @PostMapping("/camptest")
-	// @ResponseBody
-	// public Object postCamp() {
-	// Camp camp = new Camp(1, "test", 9000, 5);
-	// return camp;
-	// }
 
 }

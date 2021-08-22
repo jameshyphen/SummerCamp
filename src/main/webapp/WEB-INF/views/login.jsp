@@ -13,9 +13,9 @@
 		<div id="login-box">
 			<h3>Login with Username and Password</h3>
 			<c:if test="${not empty error}">
-			<div style="color:red;" class="error">${error}</div>
+				<div style="color:red;" class="error">${error}</div>
 			</c:if>
-				<c:if test="${not empty msg}">
+			<c:if test="${not empty msg}">
 				<div class="msg">${msg}</div>
 			</c:if>
 			<form action='login' method='POST'>
